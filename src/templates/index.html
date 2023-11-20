@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/normalize.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>АвтоОтветчик</title>
+</head>
+<body>
+
+    <div class="settings_menu">
+        <div class="settins_menu-wrapper-view_templates">
+            <a class="settins_menu-view_templates" href="/views">Мои шаблоны</a>
+        </div>
+        <div class="settings_menu-wrapper-set_time">
+            <a class="settings_menu-set_time" href="/setstarttime">Установить время запуска</a>
+        </div>
+        <form class="settings_menu-form_set_time" action="/getxlsx" method="post">
+            <p class="settings_menu-form_set_time-description">Начало периода</p>
+            <input class="settings_menu-form_set_time-input" type="datetime" title="Введите дату в формате ДД.ММ.ГГГГ
+            Например 08.11.2020" name="data_from" required>
+            <p class="settings_menu-form_set_time-description">Конец периода</p>
+            <input class="settings_menu-form_set_time-input" type="datetime" title="Введите дату в формате ДД.ММ.ГГГГ
+            Например 08.11.2020" name="data_to" required>
+            <input type="submit", value="Получить Excel" >
+        </form>
+    </div>
+
+    <div class="form_container">
+        <form action="/" method="post" class="form_container-add_template" name="add_template">
+            <p class="form_container-add_template-description">Текст шаблона</p>
+            <textarea class="form_container-add_template-input" name="template" cols="30" rows="10"></textarea>
+            <input class="form_container-add_template-btn" type="submit" value="Добавить шаблон">
+        </form>
+
+        <form action="/" method="post" class="form_container-add_filter">
+            <p class="form_container-add_filter-description">1 - 3 звезды</p>
+            <input class="form_container-add_filter-checkbox" type="checkbox" name="score_1_3">
+            <p class="form_container-add_filter-description">4 - 5 звезд</p>
+            <input class="form_container-add_filter-checkbox" type="checkbox" name="score_4_5">
+            <p class="form_container-add_filter-description">Атрикул</p>
+            <input class="form_container-add_filter-input" type="text" name="article">
+            <p class="form_container-add_filter-description">Номер шаблона</p>
+            <input class="form_container-add_filter-input" type="text" name="template_id" required>
+            <input class="form_container-add_filter-btn" type="submit" value="Добавить фильтр">
+        </form>
+
+        <div class="form_container-no_text-stop_word">
+            <form action="/" method="post">
+                <p class="form_container-no_text-stop_word-description">Номер шаблона</p>
+                <input class="form_container-no_text-stop_word-input" type="text" name="template_id" required>
+                <input type="hidden" name="no_text" value="True">
+                <input class="form_container-no_text-stop_word-btn" type="submit" value="Добавить фильтр без текста">
+            </form>
+
+            <form action="/" method="post" class="form_container-add_stop_word">
+                <p class="form_container-no_text-stop_word-description">Стоп слово</p>
+                <input class="form_container-no_text-stop_word-input" type="text" name="stop_word" required>
+                <input class="form_container-no_text-stop_word-btn" type="submit" value="Добавить стоп слово">
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>

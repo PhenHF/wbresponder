@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/normalize.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>Мои отзывы</title>
+</head>
+<body>
+    <div class="show-data_container">
+        <div class="show-data_container_templates">
+            <ul class="show-data_container_templates-ul_wrap">
+                {% for id, template in templates.items() %}
+                <li>
+                    <p class="show-data_container_templates-num">Номер шаблона - <span>{{id}}</span></p>
+                    <p class="show-data_container_templates-text">Текст шаблона</p>
+                    <p class="show-data_container_templates-text_templates">{{template}}</p>
+                </li>
+                <form action="/views" method="post">
+                    <textarea cols="30" rows="7" class="show-data_container_templates-form_input_new_text" type="text" name="new_template_text"></textarea>
+                    <input type="hidden" value="{{id}}" name="template_id">
+                    <button class="show-data_container_templates-form_input_btn" type="submit">Изменить шаблон</button>
+                </form>
+                <hr>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="show-data_container_filters">
+            <div class="show-data_container_filters_static-fields">
+                <p class="show-data_container_filters-static_fields_text">1 - 3 звезды</p>
+                <p class="show-data_container_filters-static_fields_text">4 - 5 Звезд</p>
+                <p class="show-data_container_filters-static_fields_text">Без текста</p>
+                <p class="show-data_container_filters-static_fields_text">Атрикул</p>
+                <p class="show-data_container_filters-static_fields_text">Номер шаблона</p>
+            </div>
+            <ul>
+                {% for id, filter in filters.items() %}
+                <li class="show-data_container_filters-dynamic_fields">
+                    {% if filter['score_1_3'] %}
+                        <p class="show-data_container_filters-dynamic_fields-values">Да</p>
+                    {% else %}
+                        <p class="show-data_container_filters-dynamic_fields-values">Нет</p>
+                    {% endif %}
+
+                    {% if filter['score_4_5'] %}
+                        <p class="show-data_container_filters-dynamic_fields-values">Да</p>
+                    {% else %}
+                        <p class="show-data_container_filters-dynamic_fields-values">Нет</p>
+                    {% endif %}
+
+                    {% if filter['no_text'] %}
+                        <p class="show-data_container_filters-dynamic_fields-values">Да</p>
+                    {% else %}
+                        <p class="show-data_container_filters-dynamic_fields-values">Нет</p>
+                    {% endif %}
+
+                    {% if filter['article'] %}
+                        <p class="show-data_container_filters-dynamic_fields-values padding">{{filter['article']}}</p>
+                    {% else %}
+                        <p class="show-data_container_filters-dynamic_fields-values padding">Нет</p>
+                    {% endif %}
+
+                    <p class="show-data_container_filters-dynamic_fields-values">{{filter['template_id']}}</p>
+
+                    <form class="show-data_container_filters-form" action="/views" method="post">
+                        <p class="show-data_container_filters-new_template_id_description">Изменить номер шаблона</p>
+                        <input class="show-data_container_filters-new_template_id-input" type="text" name="new_template_id">
+                        <input type="hidden" value="{{id}}" name="filter_id">
+                        <button class="show-data_container_filters-new_template_id-btn" type="submit" >Изменить фильтр</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="show-data_container_stop-words-wrapper">
+            <ul>
+                {% for word in stop_word %}
+                <li>
+                    <p class="show-data_container_stop-words">
+                        {{word}}
+                    </p>
+                </li>
+                <form action="/views">
+                    <input type="hidden" value="{{word}}" name="del_stop_word">
+                    <button class="show-data_container_stop-words-btn" type="submit">Удалить стоп слово</button>
+                </form>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+</body>
+</html>
