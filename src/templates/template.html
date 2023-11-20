@@ -28,7 +28,6 @@
             </ul>
         </div>
         <div class="show-data_container_filters">
-            {% if filters.get('id') %}
             <div class="show-data_container_filters_static-fields">
                 <p class="show-data_container_filters-static_fields_text">1 - 3 звезды</p>
                 <p class="show-data_container_filters-static_fields_text">4 - 5 Звезд</p>
@@ -36,7 +35,6 @@
                 <p class="show-data_container_filters-static_fields_text">Атрикул</p>
                 <p class="show-data_container_filters-static_fields_text">Номер шаблона</p>
             </div>
-            {% endif %}
             <ul>
                 {% for id, filter in filters.items() %}
                 <li class="show-data_container_filters-dynamic_fields">
@@ -84,7 +82,7 @@
                         {{word}}
                     </p>
                 </li>
-                <form action="/views">
+                <form action="/views" method="POST">
                     <input type="hidden" value="{{word}}" name="del_stop_word">
                     <button class="show-data_container_stop-words-btn" type="submit">Удалить стоп слово</button>
                 </form>

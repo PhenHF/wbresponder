@@ -178,6 +178,33 @@
 
 }
 
+.form_container-add_filter-no_text-description {
+    font-size: 20px;
+    display: block;
+    color: white;
+    width: 40%;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+.form_container-add_filter-no_text-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 40%;
+}
+
+.form_container-add_filter-no_text-checkbox {
+    width: 50%;
+    height: 50%;
+}
+
+.form_container-no_text-stop_word-no_text-description {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+}
+
 .form_container-no_text-stop_word-description {
     font-size: 20px;
     color: white;
@@ -187,8 +214,9 @@
 }
 
 .form_container-no_text-stop_word-input {
-    margin-left: 23%;
-    margin-bottom: 10%;
+    margin-left: 20%;
+    margin-bottom: 5%;
+    margin-top: 1%;
 }
 
 .form_container-no_text-stop_word-btn {
