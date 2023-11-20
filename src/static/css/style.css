@@ -338,3 +338,33 @@ span {
     width: 100%;
     border-radius: 20px;
 }
+
+
+/* Блок со стилями для настройки времени */
+.time_form_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 4%;
+}
+
+.time_form_wrapper-forms {
+    background-color: #9400D3;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 200px;
+}
+
+.time_form_wrapper-description {
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+
+.time_form_wrapper-btn {
+    width: 100%;
+    border-radius: 20px;
+}

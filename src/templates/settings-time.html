@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/reset.css">
+    <link rel="stylesheet" href="static/css/normalize.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <title>Настройки времени запуска</title>
+</head>
+<body>
+    <div class="time_form_wrapper">
+        <form class="time_form_wrapper-forms" action="/setstarttime" method="post">
+            <div class="time_form_wrapper-description">Утро</div>
+            <input type="text" name="morrnign_time" class="time_form_wrapper-morging-input" title="Введие час в который нужно запустить скрипт например: 09">
+            <button type="submit">Обновить время</button>
+        </form>
+        <form action="/setstarttime" class="time_form_wrapper-forms" method="post" >
+            <div class="time_form_wrapper-description">Обед</div>
+            <input type="text" name="lunch_time" class="time_form_wrapper-morging-input" title="Введие час в который нужно запустить скрипт например: 14">
+            <button type="submit">Обновить время</button>
+        </form>
+        <form action="/setstarttime" class="time_form_wrapper-forms" method="post">
+            <div class="time_form_wrapper-description">Вечер</div>
+            <input type="text" name="evening_time" class="time_form_wrapper-morging-input" title="Введие час в который нужно запустить скрипт например: 21">
+            <button type="submit" class="time_form_wrapper-btn">Обновить время</button>
+        </form>
+    </div>
+</body>
+</html>

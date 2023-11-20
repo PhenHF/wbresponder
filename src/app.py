@@ -53,6 +53,11 @@ def get_xlsx():
     except:
         return '404'
 
+@app.route('/setstarttime', methods=['POST', 'GET'])
+def set_time():
+    if request.method == 'POST':
+        print(request.form)
+    return render_template('settings-time.html')
 
 
 if __name__=='__main__':
