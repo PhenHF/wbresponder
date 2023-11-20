@@ -46,12 +46,11 @@ def response_url():
 
 @app.route('/getxlsx', methods=['POST', 'GET'])
 def get_xlsx():
-    try:
+
         handlerXlsx = handlerJsonForXlsx('feedbacks.xlsx')
-        file_name = handlerXlsx.handler_feedback(get_token(data_from=request.form['data_from'], data_to=request.form['data_to']))
+        file_name = handlerXlsx.handler_feedback(get_token(), data_from=request.form['data_from'], data_to=request.form['data_to'], take=5000, skip=0)
         return send_file(f'../{file_name}', as_attachment=True)
-    except:
-        return '404'
+
 
 @app.route('/setstarttime', methods=['POST', 'GET'])
 def set_time():

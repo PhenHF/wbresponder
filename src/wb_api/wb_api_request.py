@@ -19,7 +19,6 @@ class wbApiRequest(wbApiSettings):
         headers = {'Authorization': self.token}
         params = kwargs
         res = requests.get('https://feedbacks-api.wildberries.ru/api/v1/feedbacks', headers=headers, params=params)
-
         return {'status': res.status_code, 'data': res.json()}
 
 
@@ -27,7 +26,6 @@ class wbApiRequest(wbApiSettings):
         headers = {'Authorization': self.token}
         params = kwargs
         res = requests.get('https://feedbacks-api.wildberries.ru/api/v1/feedbacks/archive', headers=headers, params=params)
-
         return {'status': res.status_code, 'data': res.json()}
 
 
