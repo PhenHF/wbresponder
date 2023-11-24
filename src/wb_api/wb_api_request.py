@@ -24,6 +24,13 @@ class wbApiRequest(wbApiSettings):
         return {'status': res.status_code, 'data': res.json()}
 
 
+    def get_feedback_by_id(self, **kwargs):
+        headers = {'Authorization': self.token}
+        params = kwargs
+        res = requests.get('https://feedbacks-api.wildberries.ru/api/v1/feedback', headers=headers, params=params)
+
+        return {'status': res.status_code, 'data': res.json()}
+
     def get_xlsx(self, **kwargs):
         headers = {'Authorization': self.token}
         params = kwargs

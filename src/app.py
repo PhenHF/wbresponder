@@ -43,9 +43,7 @@ def response_url():
 
 @app.route('/redactor/<filter_id>', methods=['POST', 'GET'])
 def update_filter(filter_id):
-    print(filter_id)
     if request.method == 'POST':
-        print(filter_id, '--------------')
         handler = handlerForm(request.form, filter_id = filter_id)
         handler()
         return redirect('/views')
@@ -54,10 +52,9 @@ def update_filter(filter_id):
 
 @app.route('/getxlsx', methods=['POST', 'GET'])
 def get_xlsx():
-        """ handlerXlsx = handlerJsonForXlsx('feedbacks.xlsx')
-        file_name = handlerXlsx.handler_feedback(get_token(), data_from=request.form['data_from'], data_to=request.form['data_to'], take=5000, skip=0)
-        return send_file(file_name, as_attachment=True) """
-        return redirect('/')
+        handlerXlsx = handlerJsonForXlsx('feedbacks.xlsx')
+        file_name = handlerXlsx.handler_feedback(get_token(), data_from=request.form['data_from'], data_to=request.form['data_to'])
+        return send_file(f"../{file_name}", as_attachment=True)
 
 @app.route('/setstarttime', methods=['POST', 'GET'])
 def set_time():

@@ -77,8 +77,8 @@ class getData(connectDB):
         return response
 
 
-    def get_stop_words_article(self):
-        stop_word = self.cur.execute('SELECT stop_word, article FROM filters').fetchall()
+    def get_stop_words_article(self, article):
+        stop_word = self.cur.execute('SELECT stop_word FROM filters WHERE article = ?', (article, )).fetchall()
         return stop_word
 
 
