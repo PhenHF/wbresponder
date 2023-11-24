@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
-    <div class="response_container">
-        <ul></ul>
+    <a href="#modal-one" class="btn-modal">Открыть модальное окно</a>
+    <!-- Модальное окно -->
+    <div class="modal" id="modal-one" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                Заголовок модального окна
+                <a href="#close" class="btn-close" aria-hidden="true">×</a>
+            </div>
+            <div class="modal-body">
+                Содержимое модального окна
+            </div>
+        </div>
     </div>
+    <!-- / Модальное окно -->
 </body>
 </html>

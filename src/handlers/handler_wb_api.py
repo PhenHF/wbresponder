@@ -1,5 +1,5 @@
 from db.db import getData
-import time
+
 
 
 """ Модуль для обработки json с отзывами полученными с WB """
@@ -8,66 +8,65 @@ import time
 class hanlderJson(getData):
     def __init__(self):
         super().__init__()
-        self.tmp_filters = self.get_filters()
+        self.tmp_filters = self.get_filter_article_stop_word()
         self.filters = {
             'id': [filter_id[0] for filter_id in self.tmp_filters],
-            'score_1_3': [score[1] for score in self.tmp_filters],
-            'score_4_5': [score[2] for score in self.tmp_filters],
-            'no_text': [txt[3] for txt in self.tmp_filters],
-            'article': [artc[4] for artc in self.tmp_filters],
-            'template_id': [template[5] for template in self.tmp_filters]
+            'article': [artc[1] for artc in self.tmp_filters],
+            'stop_word': [stpwrd[2] for stpwrd in self.tmp_filters]
         }
-        self.stop_word = [word[0] for word in self.get_stop_word()]
-        self.templates = {'id': [i[0] for i in self.get_templates()],
-                          'template': [i[1] for i in self.get_templates()]}
-
 
     def feedbaack_handler(self, feedback):
-        feedback_init = {'id': feedback['id'], 'nmId': feedback['nmId']}
-        if feedback['text']:
-            for i in self.stop_word:
-                if i in feedback['text']:
-                    raise Exception('StopWordException')
+        feedback_init = {'id': feedback['id'], 'nmId': feedback['nmId'], 'text': feedback['text']}
 
-            if feedback['productValuation'] == 4 or feedback['productValuation'] == 5:
-                feedback_init['score_4_5'] = True
-                feedback_init['score_1_3'] = False
-            elif feedback['productValuation'] == 1 or feedback['productValuation'] == 2 or feedback['productValuation'] == 3:
-                feedback_init['score_1_3'] = True
-                feedback_init['score_4_5'] = False
+        if feedback['productValuation'] == 4 or feedback['productValuation'] == 5:
+            feedback_init['score_4_5'] = True
+            feedback_init['score_1_3'] = False
+        elif feedback['productValuation'] == 1 or feedback['productValuation'] == 2 or feedback['productValuation'] == 3:
+            feedback_init['score_1_3'] = True
+            feedback_init['score_4_5'] = False
+
+        if feedback_init['text']:
+            feedback_init['no_text'] = False
+            feedback_split = feedback_init['text'].split()
+            for n, i in enumerate(feedback_split):
+                try:
+                    if i.lower() == 'не' or i.lower() == 'ни':
+                        feedback_split[n] = f'{i} {feedback_split[n + 1]}'
+                        feedback_split[n + 1].pop()
+                except IndexError:
+                    break
 
             if feedback_init['nmId'] in self.filters['article']:
-                start = 0
+
                 if self.filters['article'].count(feedback_init['nmId']) > 1:
+                    start = 0
                     while True:
-                        idx = self.filters['article'].index(feedback_init['nmId'], start)
-                        if feedback_init['score_4_5'] and self.filters['score_4_5'][idx] and not self.filters['no_text'][idx]:
-                            return {'id': feedback_init['id'], "template": self.templates['template'][self.templates['id'].index(self.filters['template_id'][idx])]}
-                        elif feedback_init['score_1_3'] and self.filters['score_1_3'][idx] and not self.filters['no_text'][idx]:
-                            return {'id': feedback_init['id'], "template": self.templates['template'][self.templates['id'].index(self.filters['template_id'][idx])]}
-                        else:
-                            start += 1
+                        try:
+                            idx = self.filters['article'].index(feedback_init['nmId'], start)
+                            feedback_split = feedback_init['text'].split()
+                            for i in self.filters['stop_word'][idx].split(';'):
+                                for f in feedback_split:
+                                    if i == f:
+                                        raise Exception('StopWordException')
+                            start = idx + 1
+                        except ValueError:
+                            break
                 else:
-                    idx = self.filters['article'].index(feedback_init['nmId'], start)
-                    if feedback_init['score_4_5'] and self.filters['score_4_5'][idx] and not self.filters['no_text'][idx]:
-                        return {'id': feedback_init['id'], "template": self.templates['template'][self.templates['id'].index(self.filters['template_id'][idx])]}
-                    elif feedback_init['score_1_3'] and self.filters['score_1_3'][idx] and not self.filters['no_text'][idx]:
-                        return {'id': feedback_init['id'], "template": self.templates['template'][self.templates['id'].index(self.filters['template_id'][idx])]}
+                    idx = self.filters['article'].index(feedback_init['nmId'])
+                    feedback_split = feedback_init['text'].split()
+                    for i in self.filters['stop_word'][idx].split(';'):
+                        for f in feedback_split:
+                            if i == f:
+                                raise Exception('StopWordException')
+
+                return {'id': feedback_init['id'], 'text': self.get_filtet_template_text((feedback_init['score_1_3'], feedback_init['score_4_5'], self.filters['article'][idx], feedback_init['no_text']))}
 
             else:
-                for i in range(len(self.filters['id'])):
-                    if feedback_init['score_4_5'] and self.filters['score_4_5'][i] and not self.filters['article'][i] and not self.filters['no_text'][i]:
-                        return {'id': feedback_init['id'], 'template_text': self.templates['template'][self.templates['id'].index(self.filters['template_id'][i])]}
-                    elif feedback_init['score_1_3'] and self.filters['score_1_3'][i] and not self.filters['article'][i] and not self.filters['no_text'][i]:
-                        return {'id': feedback_init['id'], 'template_text': self.templates['template'][self.templates['id'].index(self.filters['template_id'][i])]}
-        else:
-            if feedback['productValuation'] == 4 or feedback['productValuation'] == 5:
-                print(feedback['productValuation'])
-                for f in range(len(self.filters['no_text'])):
-                    if self.filters["no_text"][f] and self.filters["score_4_5"][f]:
-                        return {'id': feedback_init['id'],'template_text': self.templates['template'][self.templates['id'].index(self.filters['template_id'][f])]}
+                return {'id': feedback_init['id'], 'text': self.get_filtet_template_text((feedback_init['score_1_3'], feedback_init['score_4_5'], None, feedback_init['no_text']))}
 
-            elif feedback['productValuation'] == 1 or feedback['productValuation'] == 2 or feedback['productValuation'] == 3:
-                for f in range(len(self.filters['no_text'])):
-                    if self.filters["no_text"][f] and self.filters["score_1_3"][f]:
-                        return {'id': feedback_init['id'],'template_text':self.templates['template'][self.templates['id'].index(self.filters['template_id'][f])]}
+        else:
+            if feedback_init['nmId'] in self.filters['article']:
+                return {'id': feedback_init['id'], 'text': self.get_filtet_template_text((feedback_init['score_1_3'], feedback_init['score_4_5'], self.filters['article'][self.filters['article'].index(feedback_init['nmId'])], feedback_init['no_text']))}
+
+            else:
+                return {'id': feedback_init['id'], 'text': self.get_filtet_template_text((feedback_init['score_1_3'], feedback_init['score_4_5'], None, feedback_init['no_text']))}

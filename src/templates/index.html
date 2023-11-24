@@ -9,7 +9,6 @@
     <title>АвтоОтветчик</title>
 </head>
 <body>
-
     <div class="settings_menu">
         <div class="settins_menu-wrapper-view_templates">
             <a class="settins_menu-view_templates" href="/views">Мои шаблоны</a>
@@ -29,47 +28,36 @@
     </div>
 
     <div class="form_container">
-        <form action="/" method="post" class="form_container-add_template" name="add_template">
+        <form action="/" method="post" class="form_container-form_filter">
             <p class="form_container-add_template-description">Текст шаблона</p>
             <textarea class="form_container-add_template-input" name="template" cols="30" rows="10"></textarea>
-            <input class="form_container-add_template-btn" type="submit" value="Добавить шаблон">
-        </form>
-
-        <form action="/" method="post" class="form_container-add_filter">
-            <p class="form_container-add_filter-description">1 - 3 звезды</p>
-            <input class="form_container-add_filter-checkbox" type="checkbox" name="score_1_3">
-            <p class="form_container-add_filter-description">4 - 5 звезд</p>
-            <input class="form_container-add_filter-checkbox" type="checkbox" name="score_4_5">
-            <p class="form_container-add_filter-description">Атрикул</p>
-            <input class="form_container-add_filter-input" type="text" name="article">
-            <p class="form_container-add_filter-description">Номер шаблона</p>
-            <input class="form_container-add_filter-input" type="text" name="template_id" required>
-            <input class="form_container-add_filter-btn" type="submit" value="Добавить фильтр">
-        </form>
-
-        <div class="form_container-no_text-stop_word">
-            <form action="/" method="post">
-                <div class="form_container-add_filter-no_text-wrapper">
-                    <p class="form_container-add_filter-no_text-description">1 - 3 звезды</p>
-                    <input class="form_container-add_filter-no_text-checkbox" type="checkbox" name="score_1_3">
+            <div class="form_container-add_filter-wrapper">
+                <div class="form_container-add_filter-score_filters-wrapper">
+                    <div class="form_container-add_filter-score_filters-wrapper-one">
+                        <p class="form_container-add_filter-description">1 - 3 звезды</p>
+                        <input class="form_container-add_filter-checkbox" type="checkbox" name="score_1_3">
+                    </div>
+                    <div class="form_container-add_filter-score_filters-wrapper-one">
+                        <p class="form_container-add_filter-description">4 - 5 звезд</p>
+                        <input class="form_container-add_filter-checkbox" type="checkbox" name="score_4_5">
+                    </div>
+                    <div class="form_container-add_filter-score_filters-wrapper-one">
+                        <p class="form_container-add_filter-description">Без текста</p>
+                        <input class="form_container-add_filter-checkbox" type="checkbox" name="no_text">
+                    </div>
+                    <div class="form_container-add_filter-score_filters-wrapper-one">
+                        <p class="form_container-add_filter-description">Атрикул</p>
+                        <input class="form_container-add_filter-input" type="text" name="article">
+                    </div>
                 </div>
-                <div class="form_container-add_filter-no_text-wrapper">
-                    <p class="form_container-add_filter-no_text-description">4 - 5 звезд</p>
-                    <input class="form_container-add_filter-no_text-checkbox" type="checkbox" name="score_4_5">
+                <div class="form_container-add_filter-article-no_text-wrapper">
+                    <p class="form_container-no_text-stop_word-description">Стоп слова</p>
+                    <textarea class="form_container-no_text-stop_word-input" name="stop_word" cols="10" rows="5"></textarea>
                 </div>
-                <p class="form_container-no_text-stop_word-no_text-description">Номер шаблона</p>
-                <input class="form_container-no_text-stop_word-input" type="text" name="template_id" required>
-                <input type="hidden" name="no_text" value="True">
-                <input class="form_container-no_text-stop_word-btn" type="submit" value="Добавить фильтр без текста">
-            </form>
-
-            <form action="/" method="post" class="form_container-add_stop_word">
-                <p class="form_container-no_text-stop_word-description">Стоп слово</p>
-                <input class="form_container-no_text-stop_word-input" type="text" name="stop_word" required>
-                <input class="form_container-no_text-stop_word-btn" type="submit" value="Добавить стоп слово">
-            </form>
-        </div>
-
+            </div>
+            <input type="hidden" value="add_filter" name="add_filter_template">
+            <input class="form_container-no_text-stop_word-btn" type="submit" value="Сохранить фильтр">
+        </form>
     </div>
 
 </body>

@@ -1,3 +1,5 @@
+import random
+
 from wb_api.wb_api_request import wbApiRequest
 from handlers.handler_wb_api import hanlderJson
 from db.db import addData
@@ -15,6 +17,7 @@ class responder:
         for i in feedbacks['data']['data']['feedbacks']:
             try:
                 answer = self.handler.feedbaack_handler(i)
+                answer['text'] = answer['text'][random.randint(0, len(answer['text'].split(';'))-1)]
                 if answer:
                     self.wbApi.post_answer(**answer)
                     add_data.add_response(**answer)

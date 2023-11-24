@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{filter_id}}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="test">
+        <div class="form_container">
+            <form action="/redactor/{{filter_id}}" method="post" class="form_container-form_filter">
+                <p class="form_container-add_template-description">Текст шаблона</p>
+                <textarea class="form_container-add_template-input" name="template" cols="30" rows="10"></textarea>
+                <div class="form_container-add_filter-wrapper">
+                    <div class="form_container-add_filter-score_filters-wrapper">
+                        <div class="form_container-add_filter-score_filters-wrapper-one">
+                            <p class="form_container-add_filter-description">Атрикул</p>
+                            <input class="form_container-add_filter-input" type="text" name="article">
+                        </div>
+                    </div>
+                    <div class="form_container-add_filter-article-no_text-wrapper">
+                        <p class="form_container-no_text-stop_word-description">Стоп слова</p>
+                        <textarea class="form_container-no_text-stop_word-input" name="stop_word" cols="10" rows="5"></textarea>
+                    </div>
+                </div>
+                <input type="hidden" value="add_filter" name="update_filter">
+                <input class="form_container-no_text-stop_word-btn" type="submit" value="Сохранить фильтр">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

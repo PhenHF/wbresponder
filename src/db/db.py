@@ -22,11 +22,7 @@ class createTable(connectDB):
 
     """ Метод проверяет наличие таблицы и если ее нет то создает ее """
     def create(self):
-        self.cur.execute('CREATE TABLE IF NOT EXISTS templates(id INTEGER PRIMARY KEY AUTOINCREMENT, template TEXT)')
-        self.con.commit()
-        self.cur.execute('CREATE TABLE IF NOT EXISTS filters(id INTEGER PRIMARY KEY AUTOINCREMENT, score_1_3 BOOLEAN, score_4_5, no_text BOOLEAN, article INTEGER, template_id INTEGER)')
-        self.con.commit()
-        self.cur.execute('CREATE TABLE IF NOT EXISTS stop_words(id INTEGER PRIMARY KEY AUTOINCREMENT, stop_word TEXT)')
+        self.cur.execute('CREATE TABLE IF NOT EXISTS filters(id INTEGER PRIMARY KEY AUTOINCREMENT, template TEXT, score_1_3 BOOLEAN, score_4_5, no_text BOOLEAN, article INTEGER,  stop_word TEXT)')
         self.con.commit()
         self.cur.execute('CREATE TABLE IF NOT EXISTS responses(id INTEGER PRIMARY KEY AUTOINCREMENT, feedback_id, response_text TEXT, created_up TIMESTAMP, updated_up TIMESTAMP)')
         self.con.close()
@@ -43,24 +39,8 @@ class addData(connectDB):
 
 
     """ Метод для добавления шаблонов """
-    def add_template(self, template):
-        self.cur.execute('INSERT INTO templates(template) VALUES(?)', (template, ))
-        self.con.commit()
-        self.con.close()
-
-
-    """ Метод для добавления фильтров """
-    def add_filter(self, score_1_3 = False, score_4_5 = False, no_text = False, article = None, template_id = None):
-        self.cur.execute('INSERT INTO filters(score_1_3, score_4_5, no_text, article, template_id) VALUES(?, ?, ?, ?, ?)',
-                         (score_1_3, score_4_5, no_text, article, template_id))
-        self.con.commit()
-        self.con.close()
-
-
-    """ Метод для добавления стоп слов """
-    def add_stop_word(self, stop_word):
-        print(stop_word)
-        self.cur.execute('INSERT INTO stop_words(stop_word) VALUES (?)', (stop_word, ))
+    def add_filter(self, template, score_1_3, score_4_5, no_text, article, stop_word):
+        self.cur.execute('INSERT INTO filters(template, score_1_3, score_4_5, no_text, article, stop_word) VALUES(?, ?, ?, ?, ?, ?)', (template, score_1_3, score_4_5, no_text, article, stop_word))
         self.con.commit()
         self.con.close()
 
@@ -79,27 +59,27 @@ class getData(connectDB):
         super().__init__()
 
 
-    """ Метод возвращает список кортежей из таблицы с шаблонами"""
-    def get_templates(self):
-        tmp = self.cur.execute('SELECT * FROM templates').fetchall()
-        return tmp
-
-
     """ Метод возвращает список кортежей из таблицы с фильтрами"""
     def get_filters(self):
         flt = self.cur.execute('SELECT * FROM filters').fetchall()
         return flt
 
+    def get_filter_article_stop_word(self):
+        flt = self.cur.execute('SELECT id, article, stop_word FROM filters').fetchall()
+        return flt
 
-    """ Метод возрващает список кортейже из таблицы с стоп словами """
-    def get_stop_word(self):
-        stp_wrd = self.cur.execute('SELECT stop_word FROM stop_words').fetchall()
-        return stp_wrd
-
+    def get_filtet_template_text(self, values):
+        text = self.cur.execute('SELECT template_text FROM filters WHERE score_1_3 = ? score_4_5 = ? article = ? no_text = ?', values).fetchone()[0]
+        return text
 
     def get_response(self):
         response = self.cur.execute('SELECT * FROM repsonses').fetchall()
         return response
+
+
+    def get_stop_words_article(self):
+        stop_word = self.cur.execute('SELECT stop_word, article FROM filters').fetchall()
+        return stop_word
 
 
 
@@ -109,22 +89,9 @@ class updateData(connectDB):
         super().__init__()
 
 
-    """ Метод для изменения текста шаблона """
-    def update_template(self, template_id, new_template_text):
-        self.cur.execute('UPDATE templates SET template = ? WHERE id = ?', (new_template_text, template_id))
-        self.con.commit()
-        self.con.close()
-
-
-    """ Метод для изменения id шаблона, который привязан к фильтру """
-    def update_filter(self, filter_id, new_template_id):
-        self.cur.execute('UPDATE filters SET template_id = ? WHERE id = ?', (new_template_id, filter_id))
-        self.con.commit()
-        self.con.close()
-
-    """ Метод для изменения текста ответа в базе на отзыв """
-    def update_response(self, response_text, feedback_id):
-        self.cur.execute('UPDATE repsonses SET response_text = ? updated_up = ? WHERE feedback_id = ?', (response_text, feedback_id, time.time()))
+    """ Метод для изменения фильтра """
+    def update_filter(self, filter_id, update_field, value):
+        self.cur.execute(f'UPDATE filters SET {update_field} = ? WHERE id = ?', (value, filter_id))
         self.con.commit()
         self.con.close()
 
@@ -136,22 +103,8 @@ class deleteData(connectDB):
         super().__init__()
 
 
-    """ Метод для удаления шаблона """
-    def delete_template(self, template_id):
-        self.cur.execute('DELETE FROM templates WHERE id = ?', (template_id, ))
-        self.con.commit()
-        self.con.close()
-
-
     """ Метод для удаления фильтра """
     def delete_filter(self, filter_id):
         self.cur.execute('DELETE FROM filters WHERE id = ?', (filter_id, ))
-        self.con.commit()
-        self.con.close()
-
-
-    """ Метод для удаления стоп слова """
-    def delete_stop_word(self, word_id):
-        self.cur.execute('DELETE FROM stop_words WHERE id = ?', (word_id, ))
         self.con.commit()
         self.con.close()

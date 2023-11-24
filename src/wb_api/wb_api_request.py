@@ -1,4 +1,6 @@
 import requests
+import base64
+
 
 """ Модуль для обращения к WB api """
 
@@ -22,12 +24,12 @@ class wbApiRequest(wbApiSettings):
         return {'status': res.status_code, 'data': res.json()}
 
 
-    def get_archive_feedbask(self, **kwargs):
+    def get_xlsx(self, **kwargs):
         headers = {'Authorization': self.token}
         params = kwargs
-        res = requests.get('https://feedbacks-api.wildberries.ru/api/v1/feedbacks/archive', headers=headers, params=params)
-        return {'status': res.status_code, 'data': res.json()}
-
+        res = requests.get('https://feedbacks-api.wildberries.ru/api/v1/feedbacks/report', headers=headers, params=params)
+        with open('report.xlsx', mode='wb') as f:
+            f.write(base64.b64decode(res.json()['data']['file']))
 
     def post_answer(self, **kwargs):
         headers = {'Authorization': self.token}

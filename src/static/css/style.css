@@ -68,303 +68,171 @@
     width: 95.4%;
 }
 
-/* Блок со стилями для форм */
+/* Блок со стилями для формы добавления фильтра */
 
-/* Контейнер для форм */
+
 .form_container {
-    max-width: 100%;
-    height: 700px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    background-color: #9400D3;
+    border-radius: 20px;
+    width: 70%;
+    height: 70%;
+    margin-left: 15%;
+    padding-bottom: 2%;
 }
 
-
-/* Блок для формы шаблонов */
-.form_container-add_template {
-    width: 20%;
-    height: 400px;
+.form_container-form_filter {
     display: flex;
     flex-direction: column;
-    background-color: #9400D3;
-    padding-left: 1%;
-    border-radius: 10px;
+    justify-content: space-between;
+
 }
 
 .form_container-add_template-description {
-    color: white;
-    font-size: 20px;
     text-align: center;
-    padding-top: 2%;
-    margin-bottom: 3%;
+    font-size: 20px;
+    color: white;
+    margin-top: 1%;
+    margin-bottom: 2%;
 }
 
 .form_container-add_template-input {
-    width: 94%;
-    height: 300px;
-    resize: none;
-    border-radius: 10px;
-}
-
-.form_container-add_template-btn {
-    width: 96%;
-    margin-top: 4%;
-    height: 8%;
+    width: 70%;
+    margin-left: 14%;
+    margin-bottom: 4%;
     border-radius: 10px;
 }
 
 
-/* Блок для формы фильтров */
-.form_container-add_filter {
-    width: 30%;
-    height: 353px;
+.form_container-add_filter-wrapper {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    background-color: #9400D3;
-    padding-left: 1%;
-    border-radius: 10px;
-    padding-top: 3%;
+    width: 100%;
+    margin-left: 5%;
+}
+
+.form_container-add_filter-score_filters-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30%;
+
+}
+
+.form_container-add_filter-score_filters-wrapper-one {
+    display: flex;
+    flex-direction: row;
+    width: 130%;
+    margin-bottom: 5%;
 }
 
 .form_container-add_filter-description {
-    color: white;
-    width: 40%;
     font-size: 20px;
-    margin-right: 20%;
-    margin-left: 10%;
-    padding-top: 2%;
-    padding-left: 2%;
-    margin-bottom: 5%;
+    color: white;
+    margin-left: 5%;
+    display: block;
+    margin-right: 10%;
+    width: 30%;
+}
+.form_container-add_filter-input {
+    width: 21%;
 }
 
 .form_container-add_filter-checkbox {
-    height: 10%;
-    width: 10%;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 5%;
+    height: 100%;
+    width: 40%;
 }
 
-.form_container-add_filter-input {
-    height: 10%;
-    width: 20%;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 10%;
-}
-
-
-.form_container-add_filter-btn {
-    width: 50%;
-    height: 10%;
-    margin-left: 20%;
-    margin-bottom: 1.5%;
-    border-radius: 10px;
-}
-
-
-
-/* Блок для форм фильтра без текста и стоп слова */
-
-.form_container-no_text-stop_word {
-    width: 20%;
-    height: 398px;
+.form_container-add_filter-article-no_text-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    background-color: #9400D3;
-    border-radius: 10px;
-
-}
-
-.form_container-add_filter-no_text-description {
-    font-size: 20px;
-    display: block;
-    color: white;
-    width: 40%;
-    margin-left: 5%;
-    margin-top: 2%;
-}
-
-.form_container-add_filter-no_text-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    height: 40%;
-}
-
-.form_container-add_filter-no_text-checkbox {
-    width: 50%;
-    height: 50%;
-}
-
-.form_container-no_text-stop_word-no_text-description {
-    font-size: 20px;
-    color: white;
-    text-align: center;
+    width: 60%;
 }
 
 .form_container-no_text-stop_word-description {
+    margin-bottom: 1%;
     font-size: 20px;
-    color: white;
     text-align: center;
-    margin-top: 2%;
-    margin-bottom: 10%;
+    color: white;
 }
 
 .form_container-no_text-stop_word-input {
-    margin-left: 20%;
-    margin-bottom: 5%;
-    margin-top: 1%;
+    height: 50%;
+    width: 50%;
+    resize: none;
+    margin-left: 25%;
+    border-radius: 10px;
 }
 
 .form_container-no_text-stop_word-btn {
-    margin-left: 18%;
-    width: 70%;
-    height: 20%;
-    margin-bottom: 10%;
-    border-radius: 20px;
+    width: 30%;
+    margin-top: 3%;
+    margin-left: 30%;
+    border-radius: 10px;
 }
-
 
 
 /* Блок для templates.html */
 
-
-.show-data_container {
+.templates_views_container {
     max-width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-right: 1%;
+
+}
+
+.templates_views_container-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.templates_views_container-list-wrapper {
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-
-
-}
-
-.show-data_container_templates {
-    width: 25%;
-    word-wrap: break-word;
-    padding-left: 6%;
-    margin-right: 5%;
-    text-align: center;
-}
-
-.show-data_container_templates-ul_wrap {
+    margin-bottom: 1%;
     background-color: #9400D3;
+    border-radius: 10px;
 }
 
-.show-data_container_templates-num {
+.templates_views_container-list-inner {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.templates_views_container-list-values {
+    margin-top: 1%;
     font-size: 20px;
-    margin-top: 5%;
     margin-bottom: 3%;
+    margin-left: 5%;
+    color: white;
+}
+
+
+.templates_views_container-list-template_text {
+    width: 30%;
+    margin-right: 10%;
+    color: white;
+
+}
+
+.templates_views_container-list-stop_words {
+    width: 30%;
     color: white;
 }
 
 span {
-    font-weight: bold;
-}
-
-.show-data_container_templates-text {
-    font-size: 20px;
-    margin-bottom: 2%;
-    color: white;
-
-}
-
-.show-data_container_templates-form_input_new_text {
-    width: 50%;
-    resize: none;
-
-}
-
-.show-data_container_templates-text_templates {
-    color: white;
-}
-
-.show-data_container_templates-form_input_btn {
-    width: 51.5%;
-    border-radius: 20px;
-}
-
-.show-data_container_filters {
-    width: 40%;
-    margin-right: 5%;
-    margin-top: 1%;
-    background-color: #9400D3;
-}
-
-.show-data_container_filters_static-fields {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 3%;
-}
-
-.show-data_container_filters-static_fields_text {
     font-size: 20px;
     color: white;
 }
 
-.show-data_container_filters-dynamic_fields {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.show-data_container_filters-dynamic_fields-values {
+.update_btn {
     font-size: 20px;
-    width: 16%;
-    margin-bottom: 3%;
     color: white;
-    padding-left: 4%;
-}
-
-.show-data_container_filters-form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-
-.show-data_container_filters-new_template_id_description {
-    font-size: 20px;
-    display: block;
-    width: 45%;
-    color: white;
-
-}
-
-.show-data_container_filters-new_template_id-input {
-    width: 10%;
-
-    margin-right: 30%;
-    margin-bottom: 3%;
-}
-
-.show-data_container_filters-new_template_id-btn {
-    margin-bottom: 3%;
-    width: 100%;
-    border-radius: 20px;
-}
-
-
-.show-data_container_stop-words-wrapper {
-    width: 30%;
-    background-color: #9400D3;
-    margin-top: 1%;
-}
-
-.show-data_container_stop-words {
-    font-size: 20px;
-    text-align: center;
-    color: white;
-    margin-bottom: 1%;
-}
-
-.show-data_container_stop-words-btn {
-    width: 100%;
-    border-radius: 20px;
 }
 
 

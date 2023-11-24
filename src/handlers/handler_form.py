@@ -10,22 +10,8 @@ class addFormHandler(addData):
     def __init__(self):
         super().__init__()
 
-
-    def handler_template(self, template_data):
-        self.add_template(**template_data)
-
-
-    def handler_filter(self, filter_data):
-        self.add_filter(**filter_data)
-
-
-    def handler_stop_word(self, stop_word_data):
-        self.add_stop_word(**stop_word_data)
-
-
-    def handler_set_start_time(self, start_time_data):
-        start = setTimeForStart(**start_time_data)
-        start.create_job()
+    def add_form_filter(self, data_form):
+        self.add_filter(**data_form)
 
 
 """ Класс для обработки форм обновления данных """
@@ -34,50 +20,65 @@ class updateFormHanlder(updateData):
         super().__init__()
 
 
-    def update_text_template(self, new_template_text):
-        self.update_template(**new_template_text)
-
-
-    def update_id_template_in_filter(self, new_template_id):
-        self.update_filter(**new_template_id)
+    def update_id_template_in_filter(self, data_form):
+        self.update_filter(**data_form)
 
 
 """ Класс для обработки формы и вызова нужных обработчиков"""
-class handlerForm(addFormHandler):
-    def __init__(self, data_form):
-        self.data_form = data_form
+class handlerForm:
+    def __init__(self, data_form, filter_id = None):
+        self.data_form = {**data_form}
+        self.filter_id = filter_id
 
+    def add_form_handler(self):
+        if not self.data_form.get('template'):
+            self.data_form['template'] = None
+
+        if self.data_form.get('score_1_3'):
+            self.data_form['score_1_3'] = True
+        else:
+            self.data_form['score_1_3'] = False
+
+        if self.data_form.get('score_4_5'):
+            self.data_form['score_4_5'] = True
+        else:
+            self.data_form['score_4_5'] = False
+
+        if self.data_form.get('no_text'):
+            self.data_form['no_text'] = True
+        else:
+            self.data_form['no_text'] = False
+
+        if not self.data_form.get('article'):
+            self.data_form['article'] = None
+
+        if not self.data_form.get('stop_word'):
+            self.data_form['stop_word'] = None
+
+        del self.data_form['add_filter_template']
+
+    def update_form_hanlder(self):
+        if not self.data_form['template']:
+            del self.data_form['template']
+
+        if not self.data_form['article']:
+            del self.data_form['article']
+
+        if not self.data_form['stop_word']:
+            del self.data_form['stop_word']
+
+
+        del self.data_form['update_filter']
 
     def __call__(self):
-        #Условие для добавления шаблона
-        if self.data_form.get('template'):
+        if self.data_form.get('add_filter_template'):
+            self.add_form_handler()
+            print(self.data_form)
             addform = addFormHandler()
-            addform.handler_template(self.data_form)
+            addform.add_form_filter(self.data_form)
 
-        #Условие для добавления фильтра
-        elif self.data_form.get('score_1_3') or \
-            self.data_form.get('score_4_5') or \
-            self.data_form.get('no_text') or \
-            self.data_form.get('article'):
-                addform = addFormHandler()
-                addform.handler_filter(self.data_form)
-
-        #Условие для добавления стоп слова
-        elif self.data_form.get('stop_word'):
-            addform = addFormHandler()
-            addform.handler_stop_word(self.data_form)
-
-        #Условие для обновления текста шаблона
-        elif self.data_form.get('template_id'):
-            updateform = updateFormHanlder()
-            updateform.update_text_template(self.data_form)
-
-        #Условие для обновления id шаблона который привязан к фильтру
-        elif self.data_form.get('filter_id'):
-            updateform = updateFormHanlder()
-            updateform.update_id_template_in_filter(self.data_form)
-
-        #Условие для установки времени запуска автоответчика
-        elif self.data_form.get('start_time'):
-            addform = addFormHandler()
-            addform.set_start_responder_time(self.data_form)
+        if self.data_form.get('update_filter'):
+            self.update_form_hanlder()
+            for k, v in self.data_form.items():
+                upddata = updateData()
+                upddata.update_filter(self.filter_id, k, v)

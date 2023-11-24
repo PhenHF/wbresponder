@@ -25,24 +25,32 @@ def index():
 @app.route('/views', methods=['POST', 'GET'])
 def templates_url():
     showdata = showData()
-    template = showdata.show_template
     filters = showdata.show_filter
-    stop_word = showdata.show_stop_word
     if request.method == 'POST':
         handler = handlerForm(request.form)
         handler()
         return redirect('/views')
-    return render_template('template.html', templates = template, filters = filters, stop_word = stop_word)
+    return render_template('template.html', filters = filters)
 
 
 
-@app.route('/views/response', methods = ['POST', 'GET'])
+@app.route('/response', methods = ['POST', 'GET'])
 def response_url():
-    showdata = showData()
-    response = showdata.show_response()
-    return render_template('response.html', response = response)
+    """ showdata = showData()
+    response = showdata.show_response() """
+    return render_template('response.html') #response = response)
 
 
+@app.route('/redactor/<filter_id>', methods=['POST', 'GET'])
+def update_filter(filter_id):
+    print(filter_id)
+    if request.method == 'POST':
+        print(filter_id, '--------------')
+        handler = handlerForm(request.form, filter_id = filter_id)
+        handler()
+        return redirect('/views')
+
+    return render_template('update.html', filter_id = filter_id)
 
 @app.route('/getxlsx', methods=['POST', 'GET'])
 def get_xlsx():
